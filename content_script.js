@@ -1,31 +1,19 @@
 function set_download_url(url) {
-    console.log("set_url:" + url);
-
     // create download link
     var anchor = $("#download-anchor");
 
     if(0 == anchor.length) {
-        var anchor = $("<a>");
+        var anchor = $("<a class='loader-btn loader-icon' href='javascript:;'>&#xe7bd;</a>");
         anchor.attr("id", "download-anchor");
-        anchor.text("下载");
-        anchor.css("background-color", "transparent");
-        anchor.css("color", "#999");
-        anchor.css("font-size", "10px");
-        anchor.hover(function(){
-            $(this).css("color", "#333333");
+        anchor.appendTo(document.body);
+        
+        // var buttons = $(".buttons > div");
 
-        },
-            function() {
-                $(this).css("color", "#999");
-            });
+        // var label = $("<label>");
+        // label.attr("title", "download");
+        // label.prepend(anchor);
 
-        var buttons = $(".buttons > div");
-
-        var label = $("<label>");
-        label.attr("title", "download");
-        label.prepend(anchor);
-
-        buttons.parent().after(label);
+        // buttons.parent().after(label);
     }
 
     if (url) {
@@ -40,7 +28,6 @@ function set_download_url(url) {
         }
         var file = title + ext;
         //a.attr("download", file); //新版本的chrome已经不允许非同域名修改download属性
-        a.attr("href", "#");
         a.show();
         a.off("click"); //移除上次的binding
         a.on("click", function() {
@@ -51,13 +38,11 @@ function set_download_url(url) {
         var result = re.exec(url);
         if (result) {
             var j = result[1];
-            a.html("下载《" + title + "》(" + j + "bps)");
+            a.attr("title", "下载《" + title + "》(" + j + "bps)");
         }
         else {
-            a.html("下载《" + title + "》");
+            a.attr("title", "下载《" + title + "》");
         }
-
-        
     }
     else {
         $("#download-anchor").hide();
